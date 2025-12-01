@@ -12,6 +12,12 @@ import (
 var indexHTML []byte
 
 func runServe(port string) {
+	// Use Render's PORT environment variable if available
+	envPort := os.Getenv("PORT")
+	if envPort != "" {
+		port = envPort
+	}
+
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/encrypt", handleEncrypt)
 	http.HandleFunc("/decrypt", handleDecrypt)
@@ -67,7 +73,7 @@ func handleEncrypt(w http.ResponseWriter, r *http.Request) {
 	// Encrypt directly to ResponseWriter
 	err = cryptolib.EncryptStream(file, w, password, header.Size, nil)
 	if err != nil {
-		// If streaming has started, we can't really change the status code cleanly, 
+		// If streaming has started, we can't really change the status code cleanly,
 		// but we can log it.
 		fmt.Printf("Encryption error: %v\n", err)
 	}
@@ -102,12 +108,12 @@ func handleDecrypt(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Remove .enc extension if present
-    outFilename := header.Filename
-    if len(outFilename) > 4 && outFilename[len(outFilename)-4:] == ".enc" {
-        outFilename = outFilename[:len(outFilename)-4]
-    } else {
-        outFilename = outFilename + ".dec"
-    }
+	outFilename := header.Filename
+	if len(outFilename) > 4 && outFilename[len(outFilename)-4:] == ".enc" {
+		outFilename = outFilename[:len(outFilename)-4]
+	} else {
+		outFilename = outFilename + ".dec"
+	}
 
 	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", outFilename))
 	w.Header().Set("Content-Type", "application/octet-stream")
