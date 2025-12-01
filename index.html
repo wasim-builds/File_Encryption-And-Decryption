@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoCrypt Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. Global Reset & Variables --- */
+        :root {
+            --primary-color: #4f46e5; /* Indigo */
+            --primary-hover: #4338ca;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-color: #f8fafc;
+            --input-bg: rgba(0, 0, 0, 0.2);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* --- 2. Animations --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 3. Layout --- */
+        h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: 1px;
+            animation: fadeInDown 0.8s ease-out;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* --- 4. The Glass Cards --- */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            flex: 1;
+            min-width: 300px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Stagger animation for the second card */
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* --- 5. Form Elements --- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        /* Styling the text password input */
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--input-bg);
+            color: white;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="password"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Styling the File Input Button */
+        input[type="file"] {
+            width: 100%;
+            color: #94a3b8;
+            background: var(--input-bg);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button {
+            margin-right: 15px;
+            border: none;
+            background: var(--primary-color);
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background: var(--primary-hover);
+        }
+
+        /* --- 6. Action Buttons --- */
+        .btn-action {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--primary-color), #6366f1);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-action:hover {
+            background: linear-gradient(90deg, var(--primary-hover), #4f46e5);
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>GoCrypt Online</h1>
+
+    <div class="container">
+        
+        <div class="card">
+            <h2>Encrypt File</h2>
+            <form action="/encrypt" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Select File:</label>
+                    <input type="file" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" name="password" placeholder="Enter secure password" required>
+                </div>
+                <button type="submit" class="btn-action">Encrypt & Download</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Decrypt File</h2>
+            <form action="/decrypt" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Select .enc File:</label>
+                    <input type="file" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" name="password" placeholder="Enter decryption password" required>
+                </div>
+                <button type="submit" class="btn-action">Decrypt & Download</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
